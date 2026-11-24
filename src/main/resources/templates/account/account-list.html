@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Account Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5fa;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #183b66;
+            text-align: center;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        a, button {
+            background-color: #183b66;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #183b66;
+            color: white;
+        }
+
+        .message {
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Bank Account Dashboard</h2>
+
+    <!-- Success message -->
+    <p class="message"
+       th:if="${message}"
+       th:text="${message}">
+    </p>
+
+    <div class="top">
+        <h3>All Bank Accounts</h3>
+
+        <a th:href="@{/accounts/new}">
+            + Open New Account
+        </a>
+    </div>
+
+    <!-- Account table -->
+    <table>
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Account Number</th>
+            <th>Account Type</th>
+            <th>Balance</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="account : ${accounts}">
+
+            <td th:text="${account.id}"></td>
+
+            <td th:text="${account.accountNumber}"></td>
+
+            <td th:text="${account.accountType}"></td>
+
+            <td th:text="${account.balance}"></td>
+
+            <td th:text="${account.status}"></td>
+
+            <td>
+                <a th:href="@{/accounts/{number}(number=${account.accountNumber})}">
+                    View
+                </a>
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(accounts)}">
+            <td colspan="6" class="empty">
+                No bank accounts found.
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
